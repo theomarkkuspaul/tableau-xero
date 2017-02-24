@@ -1,0 +1,6 @@
+{
+  "name": "Tableau integration with Xero",
+  "engines": {
+    "node": "4.5.0"
+  }
+}
