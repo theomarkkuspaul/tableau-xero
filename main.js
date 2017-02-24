@@ -47,6 +47,7 @@ app.get('/connect', function(req, res){
 
 app.post('/authenticate', function(req, res){
   xero.requestXeroRequestToken(req, res).then(function(tokens) {
+    console.log(tokens);
     req.session.xero = tokens
     req.session.xero.accountName = req.body.accountName;
     res.send(tokens);
@@ -60,6 +61,7 @@ app.get('/callback', function(req, res) {
   var query = queryString.parse(callbackURL.query);
 
   xero.requestXeroAccessToken(req, res, req.session.xero, query.oauth_verifier).then(function(accessTokens){
+    console.log("Access Tokens: ", accessTokens);
     xero.storeAccessToken(req.session.xero.accountName, accessTokens)
     var endpoint = process.env.endpoint;
     var accountName = req.session.xero.accountName;
