@@ -32,6 +32,7 @@
           accountName: accountName
         }
       }).done(function(resp){
+        console.log(resp);
         window.open('https://api.xero.com/oauth/Authorize?oauth_token=' +resp.token, "Chyea boi", "height=400,width=600,status=yes,toolbar=no,menubar=no,location=no");
 
       })
