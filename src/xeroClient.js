@@ -43,7 +43,7 @@ exports.requestXeroRequestToken = function(request, response) {
   var deferred = Q.defer();
 
   console.log("Getting Xero request token.");
-
+  console.log("OAuth: ", oauth);
   oauth.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results) {
 
     if (error)
