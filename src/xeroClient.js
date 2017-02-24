@@ -42,6 +42,8 @@ exports.requestXeroRequestToken = function(request, response) {
 
   var deferred = Q.defer();
 
+  console.log("Getting Xero request token.");
+
   oauth.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results) {
 
     if (error)
@@ -52,6 +54,7 @@ exports.requestXeroRequestToken = function(request, response) {
         token: oauth_token,
         secret: oauth_token_secret
       }
+      console.log("Request Token: ", xeroResponse);
       deferred.resolve(xeroResponse);
     }
   });
@@ -63,6 +66,8 @@ exports.requestXeroRequestToken = function(request, response) {
 exports.requestXeroAccessToken = function(request, reply, requestTokens, verifier) {
 
   var deferred = Q.defer();
+
+  console.log("Getting Xero access token.");
 
   oauth.getOAuthAccessToken(
       requestTokens.token,
@@ -80,6 +85,7 @@ exports.requestXeroAccessToken = function(request, reply, requestTokens, verifie
             accessToken: oauth_access_token,
             accessSecret: oauth_access_token_secret
           }
+          console.log("Access Token: ", accessTokens);
           deferred.resolve(accessTokens);
         }
       }
