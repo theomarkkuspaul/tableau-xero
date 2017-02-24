@@ -1,5 +1,5 @@
 {
-  "name": "Tableau integration with Xero",
+  "name": "tableau-xero",
   "engines": {
     "node": "4.5.0"
   }
