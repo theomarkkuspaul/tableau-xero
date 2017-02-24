@@ -53,6 +53,7 @@ app.post('/authenticate', function(req, res){
     req.session.xero.accountName = req.body.accountName;
     res.send(tokens);
   }, function(err) {
+    console.error(err);
     res.send(err);
   });
 });
