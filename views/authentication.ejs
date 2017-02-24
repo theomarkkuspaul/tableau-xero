@@ -1,0 +1,41 @@
+<html>
+<head>
+  <title>Authenticate</title>
+  <%include partials/header.ejs%>
+</head>
+<body>
+  <div id="alert-container"></div>
+
+  <h3>Authenticate</h3>
+
+  <button class="btn btn-default" onClick="authenticate()">Touch me.</button>
+
+  <input id="accountName">
+
+
+  <script type="text/javascript">
+
+    function authenticate () {
+      var accountName = $("#accountName").val()
+
+      if (accountName == ""){
+        console.error("Please enter Account Name!")
+        var alert = '<div class="alert alert-danger alert-dismissable"><strong>Authentication Failed!</strong> Please enter an Account Name<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div>'
+        $("#alert-container").append(alert)
+        return;
+      }
+
+      $.ajax({
+        url: '/authenticate',
+        method: "POST",
+        data: {
+          accountName: accountName
+        }
+      }).done(function(resp){
+        window.open('https://api.xero.com/oauth/Authorize?oauth_token=' +resp.token, "Chyea boi", "height=400,width=600,status=yes,toolbar=no,menubar=no,location=no");
+
+      })
+    }
+  </script>
+</body>
+</html>
