@@ -11,7 +11,7 @@ var REQUEST_URL = 'https://api.xero.com/oauth/RequestToken';
 var ACCESS_URL = 'https://api.xero.com/oauth/AccessToken';
 var CONSUMER_KEY = process.env.consumer_key;    // use your app key
 var CONSUMER_SECRET = process.env.consumer_secret; // use your app secret
-var CALLBACK_URL = 'https://tableau-xero.herokuapp.com/callback';    // points to your callback endpoint
+var CALLBACK_URL = process.env.CALLBACK_URL;    // points to your callback endpoint
 var AUTHORIZE_URL = 'https://api.xero.com/oauth/Authorize?oauth_token=';
 
 // Xero API defaults to application/xml content-type
