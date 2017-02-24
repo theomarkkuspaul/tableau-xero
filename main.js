@@ -48,7 +48,7 @@ app.get('/connect', function(req, res){
 app.post('/authenticate', function(req, res){
   console.log("hit me");
   xero.requestXeroRequestToken(req, res).then(function(tokens) {
-    console.log(tokens);
+    console.log("tokens: ", tokens);
     req.session.xero = tokens
     req.session.xero.accountName = req.body.accountName;
     res.send(tokens);
