@@ -5,34 +5,75 @@
   myConnector.getSchema = function (schemaCallback) {
 
     //THIS IS WHERE YOU ADD FIELDS
-    var cols = [
-        { id: "Name", dataType: tableau.dataTypeEnum.string }
+    var accountsCols = [
+        { id: "Account Name", dataType: tableau.dataTypeEnum.string },
+        { id: "Bank Account Number", dataType: tableau.dataTypeEnum.string},
+        { id: "Code", dataType: tableau.dataTypeEnum.string},
+    // Etc...
     ];
 
-     var tableInfo = {
-        id : "TestAPIGateway",
-        columns : cols
-    };
+    var accountsTable = {
+      id: "Accounts",
+      columns: accountsCols
+    }
 
-    schemaCallback([tableInfo]);
 
-  }
+    var invoicesCols = [
+      { id: "Invoice ID", dataType: tableau.dataTypeEnum.string},
+      { id: "Total", dataType: tableau.dataTypeEnum.string},
+      // ETC...
+    ]
+
+    var invoicesTable = {
+      id: "Invoices",
+      columns: invoicesCols
+    }
+
+    // For the different endpoints you want to query from, make sure to define a new table, as displayed above.
+
+    schemaCallback([accountsTable, invoicesTable]);
+
+  };
 
   myConnector.getData = function (table, doneCallback) {
 
     // HERE IS WHERE YOU MAKE API CALLS TO AWS API GATEWAY
 
-    $.getJSON("https://0yi66j7xag.execute-api.ap-southeast-2.amazonaws.com/Test/test?accountName=yes", function(resp) {
+    var apiGatewayEndpoint = "https://r3k6ja6cl0.execute-api.ap-southeast-2.amazonaws.com/Prod/xero" + window.location.search;
 
-        var accounts = resp.Accounts;
+    $.getJSON(apiGatewayEndpoint, function(resp) {
 
-        tableData = [];
+        var tableData = [];
 
-        // Iterate over the JSON object
-        for (var i = 0, len = accounts.length; i < len; i++) {
-            tableData.push({
-                "Name": accounts[i].Name
+        // Iterate over the JSON response
+        for (var i = 0, len = resp.length; i < len; i++) {
+
+          if (!!resp[i].Accounts) {
+
+            resp[i].Accounts.forEach(function(acc){
+              tableData.push({
+                "Account Name": acc.Name,
+                "Bank Account Number": acc.BankAccountNumber,
+                "Code": acc.Code,
+              });
+
             });
+
+          }
+
+          else if (!!resp[i].Invoices){
+
+            resp[i].Invoices.forEach(function(inv){
+
+              tableData.push({
+                "Invoice ID": inv.InvoiceID,
+                "Total": inv.Total,
+              });
+
+            });
+
+          }
+
         }
 
         table.appendRows(tableData);
@@ -40,13 +81,13 @@
 
         });
   }
-      tableau.registerConnector(myConnector);
+
+  tableau.registerConnector(myConnector);
 
   $(document).ready(function () {
     $("#submitButton").click(function () {
-        tableau.connectionName = "Connect Tableau to Xero";
-        tableau.submit();
+      tableau.connectionName = "Connect Tableau to Xero";
+      tableau.submit();
     });
-
-})
+  })
 })();
