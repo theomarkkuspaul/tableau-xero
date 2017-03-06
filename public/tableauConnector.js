@@ -3,12 +3,10 @@
   var myConnector = tableau.makeConnector();
 
   myConnector.getSchema = function (schemaCallback) {
-    // console.log(tableau);
 
+    //THIS IS WHERE YOU ADD FIELDS
     var cols = [
-        { id: "Name", dataType : tableau.dataTypeEnum.string }
-        // { id: "Last Name", dataType: tableau.dataTypeEnum.string },
-        // { id: "Email", dataType: tableau.dataTypeEnum.string }
+        { id: "Name", dataType: tableau.dataTypeEnum.string }
     ];
 
      var tableInfo = {
@@ -22,17 +20,18 @@
 
   myConnector.getData = function (table, doneCallback) {
 
+    // HERE IS WHERE YOU MAKE API CALLS TO AWS API GATEWAY
+
     $.getJSON("https://0yi66j7xag.execute-api.ap-southeast-2.amazonaws.com/Test/test?accountName=yes", function(resp) {
 
-        var orgs = resp.Organisations;
-        console.log(orgs);
+        var accounts = resp.Accounts;
+
         tableData = [];
 
         // Iterate over the JSON object
-        for (var i = 0, len = orgs.length; i < len; i++) {
-          console.log(orgs[i].Name);
+        for (var i = 0, len = accounts.length; i < len; i++) {
             tableData.push({
-                "Name": orgs[i].Name
+                "Name": accounts[i].Name
             });
         }
 

@@ -76,7 +76,6 @@ exports.requestXeroAccessToken = function(request, reply, requestTokens, verifie
       function (error, oauth_access_token, oauth_access_token_secret, results) {
 
         if (error) {
-          console.log(error);
           deferred.reject(error);
         }
 
@@ -106,19 +105,3 @@ exports.storeAccessToken = function (accountName, tokens) {
     secretToken: tokens.accessSecret
   });
 }
-
-// oauth.get('https://api.xero.com/api.xro/2.0/Organisation',
-//   oauth_access_token,
-//   oauth_access_token_secret,
-//   function (e, data, res) {
-//     if (e) {
-//       deferred.reject(e);
-//     }
-
-//     else {
-//       console.log(data);
-//       var oResponse = JSON.parse(data);
-
-//       deferred.resolve(oResponse);
-//     }
-//   });
